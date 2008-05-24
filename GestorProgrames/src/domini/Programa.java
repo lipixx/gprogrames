@@ -189,11 +189,11 @@ public class Programa implements ClasseAmbClau<String>, Serializable {
      */
     public String[] getTemes() {
         int sizeList = llistaTematica.size();
-
+        
         if (sizeList > 0) {
             String[] temes = new String[sizeList];
-
-            for (int i = 0; i < sizeList; i++) {
+             /*Aqui hauria de ser sizeList.. pero peta*/
+            for (int i = 0; i < sizeList-1; i++) {
                 temes[i] = new String("" + llistaTematica.get(i).getTema());
             }
             return temes;

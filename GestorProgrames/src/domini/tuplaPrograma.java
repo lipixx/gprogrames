@@ -73,7 +73,6 @@ public class tuplaPrograma
         attrc1 = "";
         attrc2 = -1;
         attrc3 = "";
-        tematiques = new String[1];
-        tematiques[0] = "Estandard";
+        tematiques = null;     
     }
 }

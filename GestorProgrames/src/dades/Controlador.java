@@ -104,7 +104,8 @@ public class Controlador <K,T extends ClasseAmbClau<K>>
                     * per tant, fem que "objecte" tingui una copia de l'objecte i
                 * i retornem cert.
                 */
-                   objecte = i;
+                   objecte.setCopia(i);
+                   //objecte = i;
                    return true;
                 }
             }

@@ -24,7 +24,7 @@ public class Tematica implements ClasseAmbClau<String>, Serializable {
      *  @return Un String que representa el nom d'aquesta tematica.
      */
     public String getTema() {
-        return nomTema;
+        return new String(nomTema);
     }
 
     /**

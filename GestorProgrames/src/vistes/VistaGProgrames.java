@@ -27,6 +27,8 @@ public class VistaGProgrames extends javax.swing.JPanel {
     public void avis(String missatge) {
         JOptionPane.showMessageDialog(null, (Object) missatge);
     }
+
+    
     void popUpCercaNom(ActionListener actionListener) {
        // buttonOkCercaNom.addActionListener(actionListener);
     }
@@ -36,14 +38,16 @@ public class VistaGProgrames extends javax.swing.JPanel {
     /**Modificadores dels atributs de les llistes i cuadres de text*/
     public void setLlistaProgrames(String[] strProgrames) {
         llistaProgrames.setListData(strProgrames);
+        llistaProgrames.setSelectedIndex(-1); //Aqui es com si hagis fet un click...
     }
 
     public void setLlistaFiltres(String[] llistaEFiltres) {
         /*Afegim "Tots"*/
+        llistaProgrames.setSelectedIndex(-1); //Aqui es com si hagis fet un click...
+        llistaFiltres.setSelectedIndex(0);
         String [] llistaAux = new String[llistaEFiltres.length+1];
         llistaAux[0] = "Tots";
         System.arraycopy(llistaEFiltres, 0, llistaAux, 1, llistaEFiltres.length);
-        
         llistaFiltres.setListData(llistaAux);
     }
  
@@ -55,17 +59,15 @@ public class VistaGProgrames extends javax.swing.JPanel {
     void clearFitxa() {
         fitxaPrograma.setText("");
     }
-    
-    
-    
+
     /**Consultores de botons seleccionats i elements clicats a la llista*/
 
     public String getFClickedStr() 
     {
-        if (buttonFiltreFormat.isSelected()) return "format";
-        if (buttonFiltreFormat.isSelected()) return  "categoria";
-        if (buttonFiltreFormat.isSelected()) return  "nom";
-        if (buttonFiltreFormat.isSelected()) return  "tematica";
+        if (buttonFiltreFormat.isSelected())  return "format";
+        if (buttonFiltreCategoria.isSelected()) return  "categoria";
+        if (buttonFiltreNom.isSelected()) return  "nom";
+        if (buttonFiltreTematica.isSelected()) return  "tematica";
         return "";
     }
 
@@ -80,12 +82,17 @@ public class VistaGProgrames extends javax.swing.JPanel {
 
     public String getProgramaSelected() 
     {
-        return (String) llistaProgrames.getSelectedValue();
+        String programaSelected = (String) llistaProgrames.getSelectedValue();
+        
+        if (programaSelected == null) return "";
+       return programaSelected;  
     }
        
     public String getFiltreSelected()
     {
-        return String.valueOf(llistaFiltres.getSelectedIndex());
+        String filtreSelected = String.valueOf(llistaFiltres.getSelectedIndex()-1);
+        if (filtreSelected == null) return "";
+        return String.valueOf(llistaFiltres.getSelectedIndex()-1);
     }
     
     
@@ -159,6 +166,7 @@ public class VistaGProgrames extends javax.swing.JPanel {
             public Object getElementAt(int i) { return strings[i]; }
         });
         llistaFiltres.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        llistaFiltres.setSelectedIndex(0);
         jScrollPane2.setViewportView(llistaFiltres);
 
         buttonGroup1.add(buttonFiltreFormat);
