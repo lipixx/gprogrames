@@ -21,6 +21,7 @@ import java.util.LinkedList;
  * String clase = cliente1.getClass().getName();
  * GestorDisc<Client> guardador = new GestorDisc(clase);
  */
+@SuppressWarnings("unchecked")
 public class GestorDisc<T> {
 
     private String clase;

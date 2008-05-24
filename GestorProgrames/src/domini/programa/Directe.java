@@ -21,7 +21,7 @@ public class Directe extends Programa {
     public Directe(String nom, Calendar dataCaducitat, String descripcio, float preuBase, Calendar NiniciEmissio, int Nduracio) {
         super(nom, dataCaducitat, descripcio, preuBase);
         
-        if (iniciEmissio.after(dataCaducitat))
+        if (NiniciEmissio.after(dataCaducitat))
         {
             iniciEmissio = (Calendar) dataCaducitat.clone();
         }
