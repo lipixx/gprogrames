@@ -1,7 +1,24 @@
 /**
  * La classe RepositoriProgrames conte la llista de programes actual carregada
- * en memoria.
+ * en memoria. Consisteix en una matriu de LinkedList<T> de 3x10 (3 formats, 11 categories),
+ * on, per cada posicio hi ha la LinkedList<T> que conte els programes corresponents.
+ * Per guardar-ho a disc, guardem nomes un element, que es la matriu sencera, per aixo
+ * utilizo GestorDisc.guardaUn en lloc de GestorDisc.guardaTots. El gestor de disc
+ * que s'ha hagut de crear, es de tipus GestorDisc<LinkedList<T>[][]>, i el nom del tipus
+ * que s'obte mitjançant l'extraccio de noms de Java getClass.getInstance, es: 
+ * "[[Ljava.util.LinkedList;"  Per tant se li ha passat aquest parametre al nou gestor de disc.
  * 
+ * A mes, per carregar la matriu, no hi ha un metode GestorDisc.carregaUn, sino que nomes
+ * hi ha la possibilitat de fer GestorDisc.carregaTots que retorna una LinkedList<T> amb T el
+ * tipus que tingui el fitxer, en el nostre cas especific: LinkedList<T>[][].
+ * Per tant hem hagut de crear una llistaAuxiliar de tipus LinkedList<LinkedList<T>[][]>, que
+ * nomes contindra un Objecte, la matriu. Per obtenir-lo ho fem amb carregaTots, i si la LinkedList
+ * retornada te nomes un element, l'associem a la llistaProgrames[][].
+ *
+ * Tambe s'han eliminat tots els Warnings de tipus "unchecked", ja que no hi ha manera en Java de fer
+ * una classe generica com aquesta, amb tipus T, i que al fer els Castings es pugui comprovar que
+ * son correctes.
+ *
  * @author  Felip Moll
  * @version 0.1, 30 Maig 2008 
  * 
@@ -12,28 +29,36 @@ package dades;
 import domini.ClasseAmbClau;
 import java.util.LinkedList;
 
+@SuppressWarnings("unchecked") 
 public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
 
-    private LinkedList<T>[][] llistaProgrames;
+    private LinkedList<T> llistaProgrames[][];
     private GestorDisc<LinkedList<T>[][]> gestDisc;
-    private GestorDisc<LinkedList> gestDisc2;
 
     public RepositoriProgrames() throws Exception {
 
         try {
-
-            LinkedList llistaAux;
             gestDisc = new GestorDisc("[[Ljava.util.LinkedList;");
-            llistaAux = gestDisc.carregaTots("RepositoriProgrames.db");
+            LinkedList<java.util.LinkedList<T>[][]> aux;
 
-            if (llistaAux.size() == 1) {
-                llistaProgrames = (LinkedList<T>[][]) llistaAux.get(0);
+            aux = gestDisc.carregaTots("RepositoriProgrames.db");
+
+		
+            if (aux.size() == 1) {
+            	llistaProgrames = aux.get(0);
+                System.out.println("Comprovacio de si s'ha carregat be: ");
+                for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 11; j++) {
+                    System.out.println("llista i j mida"+i+" "+j+" "+llistaProgrames[i][j].size());
+                }
+            }
             }
 
         } catch (GestorDiscException g) {
-            llistaProgrames = new LinkedList[3][10];
+                        System.out.println("aaaaa ");
+            llistaProgrames = new LinkedList[3][11];
             for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < 11; j++) {
                     llistaProgrames[i][j] = new LinkedList<T>();
                 }
             }
@@ -84,6 +109,11 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
      */
     public void buidarLlista() {
         llistaProgrames = new LinkedList[3][11];
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 11; j++) {
+                    llistaProgrames[i][j] = new LinkedList<T>();
+                }
+    }
     }
 
     /**
@@ -121,7 +151,8 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
      * la categoria pasada per parametre.
      * @return Una llista de objectes T que pertanyen exclusivament a la categoria.
      */
-    public LinkedList<T>[] llistarProgrames(int categoria) {
+
+  public LinkedList<T>[] llistarProgrames(int categoria) {
         LinkedList<T> llistaResultant[] = new LinkedList[3];
         for (int i = 0; i < 3; i++) {
             llistaResultant[i] = llistaProgrames[i][categoria];
@@ -175,7 +206,7 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
         int listSize;
 
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 11; j++) {
                 listSize = llistaProgrames[i][j].size();
                 for (int k = 0; k < listSize; k++) {
 
@@ -200,7 +231,7 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
     public int getListSize() {
         int total = 0;
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 11; j++) {
                 total = total + llistaProgrames[i][j].size();
             }
         }
@@ -214,12 +245,9 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
      *  @post   S'ha guardat el repositori al disc.
      *  @return true si ha anat be, fals altrament.
      */
-    public boolean exportaProgrames(String nomFitxer) throws GestorDiscException {
-
-        LinkedList llistaAux = new LinkedList();
-        llistaAux.add(llistaProgrames);
-        gestDisc2 = new GestorDisc("java.util.LinkedList");
-        gestDisc2.guardaUn(llistaAux, nomFitxer);
+    public boolean exportaProgrames(String nomFitxer) throws GestorDiscException 
+    {
+        gestDisc.guardaUn(llistaProgrames, nomFitxer);
         return true;
     }
 
@@ -230,12 +258,15 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
      *  @post   S'ha carregat el repositori de disc.
      *  @return true si ha anat be, fals altrament.
      */
-    public boolean importaProgrames(String rutaFitxer) throws GestorDiscException {
-        LinkedList llistaAux;
-        llistaAux = gestDisc.carregaTots(rutaFitxer);
+    public boolean importaProgrames(String rutaFitxer) throws GestorDiscException
+     {
+      LinkedList<java.util.LinkedList<T>[][]> aux;
+      
+      aux = gestDisc.carregaTots(rutaFitxer);
 
-        if (llistaAux.size() == 1) {
-            llistaProgrames = (LinkedList<T>[][]) llistaAux.get(0);
+        if (aux.size() == 1) {
+        llistaProgrames = aux.get(0);
+            System.out.println("LLista ben importada!");
             return true;
         }
 

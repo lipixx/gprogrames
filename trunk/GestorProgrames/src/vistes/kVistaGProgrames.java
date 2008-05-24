@@ -200,10 +200,11 @@ public void setLlistaFiltre()
         Date date;
         tuplaPrograma nou = new tuplaPrograma();
         nou.nom = "Primer";
+        nou.descripcio = "Programa de porcs i moixus";
         nou.preu = (float) 10.50;
-        nou.categoria = 0;
+        nou.categoria = 10;
         nou.duracio = 30;
-        nou.format = 0;
+        nou.format = 2;
         nou.tematiques = new String[3];
         nou.tematiques[0] = "PoRcs";
         nou.tematiques[1] = "Moixus";
@@ -215,7 +216,10 @@ public void setLlistaFiltre()
         nou.dataCad = dCad;
         nou.iniciEmissio = dIniE;
         
-        CPG.afegirPrograma(nou);
+        if (!CPG.afegirPrograma(nou))
+        System.out.println("El programa no te les dades correctes");
+        else
+        System.out.println("El programa ha estat afegit!");
     }
     
     public void guardarTot() throws GestorDiscException

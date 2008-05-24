@@ -17,6 +17,7 @@ import domini.programa.*;
 import java.util.Calendar;
 import java.util.LinkedList;
 
+@SuppressWarnings("unchecked")
 public class ControladorProgrames {
 
     private RepositoriProgrames<String, domini.Programa> RepoProg;
@@ -319,7 +320,7 @@ public class ControladorProgrames {
                     resultatT = RepoProg.llistarProgrames();
 
                     for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 10; j++) {
+                        for (int j = 0; j < 11; j++) {
                             nProgs = nProgs + resultatT[i][j].size();
                         }
                     }
@@ -330,7 +331,7 @@ public class ControladorProgrames {
                     /**Dins el Format*/
                     for (int i = 0; i < 3; i++) {
                         /**Dins la categoria*/
-                        for (int j = 0; j < 10; j++) {
+                        for (int j = 0; j < 11; j++) {
                             /**Dins la llista F-C*/
                             for (int k = 0; k < resultatT[i][j].size(); k++) {
                                 p = (Programa) resultatT[i][j].get(j);
@@ -351,7 +352,7 @@ public class ControladorProgrames {
                     if (tipusFiltre.equalsIgnoreCase("tots")) {
                         resultatT = RepoProg.llistarProgrames();
                         for (int i = 0; i < 3; i++) {
-                            for (int j = 0; j < 10; j++) {
+                            for (int j = 0; j < 11; j++) {
                                 nProgs = nProgs + resultatT[i][j].size();
                             }
                         }
@@ -360,7 +361,7 @@ public class ControladorProgrames {
                         arraySortida = new String[nProgs];
 
                         for (int i = 0; i < 3; i++) {
-                            for (int j = 0; j < 10; j++) {
+                            for (int j = 0; j < 11; j++) {
                                 for (int k = 0; k < resultatT[i][j].size(); k++) {
                                     p = (Programa) resultatT[i][j].get(k);
                                     arraySortida[index] = p.getNom();
@@ -475,38 +476,39 @@ public class ControladorProgrames {
          * "Musica", "Noticies", "Pelicula", "Serie", "Tertulia";
          *  No agafem els atributs de les categories, es deixa com opcional.
          */
-        tipus = tipus.substring(0, midaTipus - 2);
-        if (tipus.compareTo("Altres") == 0) {
+        tipus = tipus.substring(0, midaTipus - 1);
+
+        if (tipus.compareTo("domini.programa.Altres") == 0) {
             fitxa.categoria = 0;
         }
-        if (tipus.compareTo("Adults") == 0) {
+        if (tipus.compareTo("domini.programa.Adults") == 0) {
             fitxa.categoria = 1;
         }
-        if (tipus.compareTo("Concurs") == 0) {
+        if (tipus.compareTo("domini.programa.Concurs") == 0) {
             fitxa.categoria = 2;
         }
-        if (tipus.compareTo("Documental") == 0) {
+        if (tipus.compareTo("domini.programa.Documental") == 0) {
             fitxa.categoria = 3;
         }
-        if (tipus.compareTo("Esport") == 0) {
+        if (tipus.compareTo("domini.programa.Esport") == 0) {
             fitxa.categoria = 4;
         }
-        if (tipus.compareTo("Infantil") == 0) {
+        if (tipus.compareTo("domini.programa.Infantil") == 0) {
             fitxa.categoria = 5;
         }
-        if (tipus.compareTo("Musica") == 0) {
+        if (tipus.compareTo("domini.programa.Musica") == 0) {
             fitxa.categoria = 6;
         }
-        if (tipus.compareTo("Noticies") == 0) {
+        if (tipus.compareTo("domini.programa.Noticies") == 0) {
             fitxa.categoria = 7;
         }
-        if (tipus.compareTo("Pelicula") == 0) {
+        if (tipus.compareTo("domini.programa.Pelicula") == 0) {
             fitxa.categoria = 8;
         }
-        if (tipus.compareTo("Serie") == 0) {
+        if (tipus.compareTo("domini.programa.Serie") == 0) {
             fitxa.categoria = 9;
         }
-        if (tipus.compareTo("Tertulia") == 0) {
+        if (tipus.compareTo("domini.programa.Tertulia") == 0) {
             fitxa.categoria = 10;
         }
 

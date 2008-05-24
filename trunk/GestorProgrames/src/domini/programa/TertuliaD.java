@@ -18,7 +18,7 @@ public class TertuliaD extends Directe {
 
     public TertuliaD(String Nnom, Calendar NdataCaducitat, String Ndescripcio, float NpreuBase, Calendar NiniciEmissio, int Nduracio, String NnomTertulia) {
         super(Nnom, NdataCaducitat, Ndescripcio, NpreuBase, NiniciEmissio, Nduracio);
-        nomTertulia = NnomTertulia;
+        nomTertulia = new String(NnomTertulia);
     }
     
      public TertuliaD(String Nnom, Calendar NdataCaducitat, String Ndescripcio, float NpreuBase, Calendar NiniciEmissio, int Nduracio) {
@@ -40,6 +40,6 @@ public class TertuliaD extends Directe {
      *  @post   S'ha modificat l'atribut amb el nou valor.
      */
     public void setNomTertulia(String nNomTertulia) {
-        nomTertulia = nNomTertulia;
+        nomTertulia = new String(nNomTertulia);
     }
 }
