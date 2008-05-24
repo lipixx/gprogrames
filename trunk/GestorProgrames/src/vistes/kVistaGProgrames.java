@@ -78,12 +78,12 @@ public class kVistaGProgrames
                 //O es converteix a String llistaFiltres = cProgs.getLTematiques();
                 //o S'ha de fer un popup i agafar el valor
                 llistaFiltres = new String[1];
-                llistaFiltres[0] = "Tematiques";
+                llistaFiltres[0] = "Nom que s'haura de recollir del popup";
                 break;
             case 3: //Nom, introduit al popup
                 //S'ha de fer el popup i agafar el valor
                 llistaFiltres = new String[1];
-                llistaFiltres[0] = "Nom";
+                llistaFiltres[0] = "Tematica: s'haura de recollir...";
                 break;
             default: break;
         }
@@ -100,7 +100,7 @@ public class kVistaGProgrames
         /**Setejem les dues llistes que tenim, la de programes i la de filtres
          buidem tambe la fitxa*/
         actLlistaFiltres(0);
-        actLlistaProgrames("tots",null);
+        actLlistaProgrames("tots","");
         vGProgs.setLlistaProgrames(llistaProgrames);
         vGProgs.setLlistaFiltres(llistaFiltres);
         vGProgs.clearFitxa();
@@ -116,7 +116,7 @@ public class kVistaGProgrames
         accions[6] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "modificarPrograma");
         accions[7] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "guardarTot");
         accions[8] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "sortir");
-        
+
         selFiltre = (ListSelectionListener) java.beans.EventHandler.create(ListSelectionListener.class, this, "actualitzaLlProgrames");
         selPrograma = (ListSelectionListener) java.beans.EventHandler.create(ListSelectionListener.class, this, "seleccionatPrograma");
         
@@ -127,55 +127,27 @@ public class kVistaGProgrames
     /** Funcions dels action listeners i list listeners*/
 public void setLlistaFiltre()
     {
-        switch (vGProgs.getFClickedInt())
-        {
-
-            /**-1,0,1,2,3 = Tots, Format, Categoria, Nom, Tematica*/
-            
-            case -1: //Per si en un futur es vol posar un altre boto
-
-                String[] dades = new String[1];
-                dades[0] = "Tots";            
-                 vGProgs.setLlistaFiltres(dades);
-                break;
-                
-            case 0:
-                vGProgs.setLlistaFiltres(CPG.getLFormat());
-                break;
-                
-            case 1:
-                vGProgs.setLlistaFiltres(CPG.getLCategories());
-                break;
-                
-            case 2:
-         	String[] aux = new String[1];
-                aux[0] = "Nom!!";
-                vGProgs.setLlistaFiltres(aux);
-                break;
-                
-            case 3:
-                aux = new String[1];
-                aux[0] = "Tematica!!";
-                vGProgs.setLlistaFiltres(aux);
-                break;
-                
-            default: 
-                break;
-        }
+        actLlistaFiltres(vGProgs.getFClickedInt());
+        vGProgs.setLlistaFiltres(llistaFiltres);
     }
     
     public void actualitzaLlProgrames()
     {
-        //Agafa valor des toggleButtons
+        System.out.println("Actualitz programes!!!!");
+       //Boto pitjat
         String tipusFiltre = vGProgs.getFClickedStr();
-        
+
         //Agafa valor des filtre
         String valorFiltre = vGProgs.getFiltreSelected();
-        
+
+        if (valorFiltre.equals("-2") || valorFiltre.equals("-1")) {
+        tipusFiltre = "tots";
+	}
+	
         llistaProgrames = CPG.getllistaFiltrada(tipusFiltre,valorFiltre);
-        
+
         //Actualitza llista
-        vGProgs.setLlistaFiltres(llistaProgrames);
+        vGProgs.setLlistaProgrames(llistaProgrames);
     }
     
     public void seleccionatPrograma()

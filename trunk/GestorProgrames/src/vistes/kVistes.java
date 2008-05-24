@@ -19,7 +19,6 @@ public class kVistes
      * - VistaPrincipal
      */
     ControladorProgrames CPG;
-    kVistes kvPrincipal;
     kVistaGProgrames kvGProgs;
     VistaPrincipal vPrincipal;
     
@@ -32,7 +31,7 @@ public class kVistes
         /**Controladors de les vistes (han de tenir els controladors de domini que necessitin*/
         kvGProgs = new kVistaGProgrames(CPG);
 
-        /**Vista principal (ha de tenir tots els controladors de vistes*/
+        /**Vista principal (ha de tenir totes les vistes*/
         vPrincipal = new VistaPrincipal(kvGProgs.getVista());
         
         

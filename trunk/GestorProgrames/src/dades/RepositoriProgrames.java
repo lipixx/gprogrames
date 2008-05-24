@@ -46,16 +46,10 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
 		
             if (aux.size() == 1) {
             	llistaProgrames = aux.get(0);
-                System.out.println("Comprovacio de si s'ha carregat be: ");
-                for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 11; j++) {
-                    System.out.println("llista i j mida"+i+" "+j+" "+llistaProgrames[i][j].size());
-                }
-            }
             }
 
         } catch (GestorDiscException g) {
-                        System.out.println("aaaaa ");
+            System.out.println("Repositoris buits, creant nou Repositori");
             llistaProgrames = new LinkedList[3][11];
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 11; j++) {

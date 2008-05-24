@@ -161,7 +161,7 @@ public class ControladorProgrames {
     private void addTematicaProg(String temes[], Programa p) {
         int nTemes = temes.length;
         for (int i = 0; i < nTemes; i++) {
-            Tematica t = null;
+            Tematica t = new Tematica("");
             if (RepoTemes.obteElement(temes[i].toLowerCase(), t)) {
                 p.addTematica(t);
             }
@@ -333,8 +333,9 @@ public class ControladorProgrames {
                         /**Dins la categoria*/
                         for (int j = 0; j < 11; j++) {
                             /**Dins la llista F-C*/
+                            
                             for (int k = 0; k < resultatT[i][j].size(); k++) {
-                                p = (Programa) resultatT[i][j].get(j);
+                                p = (Programa) resultatT[i][j].get(k);
                                 arrayTemes = p.getTemes();
 
                                 for (int o = 0; o < arrayTemes.length; o++) {
