@@ -8,39 +8,36 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 
-public class kVistaGProgrames 
-{
+public class kVistaGProgrames {
+
     private ControladorProgrames CPG;
-    
     private VistaGProgrames vGProgs;
-    
-    private tuplaPrograma dadesPrograma; 
+    private tuplaPrograma dadesPrograma;
     private String[] llistaProgrames;
     private String[] llistaFiltres;
     SimpleDateFormat formatCalendar;
-    
-    public kVistaGProgrames(ControladorProgrames cpgComu)
-    {    
+
+    public kVistaGProgrames(ControladorProgrames cpgComu) {
         /**Controlador de programes que li pasa el kVistes*/
         CPG = cpgComu;
-        
+
         /*Incicialitzacio d'atributs privats*/
         llistaProgrames = null;
         llistaFiltres = null;
         dadesPrograma = null;
         formatCalendar = new SimpleDateFormat("dd-MM-yyyy");
-        
+
         /*Init de vista*/
         initVistaGProgrames();
     }
-    
-    public VistaGProgrames getVista()
-    {
-    return vGProgs;
+
+    public VistaGProgrames getVista() {
+        return vGProgs;
     }
-    
+
     /**
      * Obte una llista filtrada del controlador de domini de programes,
      * i l'assigna a la llistaProgrames, variable global d'aquest controlador.
@@ -52,11 +49,10 @@ public class kVistaGProgrames
      * @pre -
      * @post S'ha assignat la llista filtrada del CPG a la global d'aquesta classe.
      */
-    public void actLlistaProgrames(String tipusFiltre, String valor)
-    {
-        llistaProgrames = CPG.getllistaFiltrada(tipusFiltre,null);
+    public void actLlistaProgrames(String tipusFiltre, String valor) {
+        llistaProgrames = CPG.getllistaFiltrada(tipusFiltre, null);
     }
-    
+
     /**
      * Obte una llista de filtres segons el parametre especificat.
      * @param i Val 0 per obtenir una llista de Formats, 1 de Categories,
@@ -65,46 +61,60 @@ public class kVistaGProgrames
      * @post S'ha assignat la llistaFiltres una nova llista d'acord amb
      * la opcio seleccionada.
      */
-    private void actLlistaFiltres(int i) 
-    {
-        switch (i){
+    private void actLlistaFiltres(int i) {
+        switch (i) {
             case 0: //Llista de formats
                 llistaFiltres = CPG.getLFormat();
                 break;
             case 1: //Llista de categories
                 llistaFiltres = CPG.getLCategories();
                 break;
-            case 2: //Llista de Tematiques disponibles
-                //O es converteix a String llistaFiltres = cProgs.getLTematiques();
-                //o S'ha de fer un popup i agafar el valor
-                llistaFiltres = new String[1];
-                llistaFiltres[0] = "Nom que s'haura de recollir del popup";
-                break;
-            case 3: //Nom, introduit al popup
+            case 2:  //Nom, introduit al popup
                 //S'ha de fer el popup i agafar el valor
-                llistaFiltres = new String[1];
-                llistaFiltres[0] = "Tematica: s'haura de recollir...";
+                Object[] possibilities = null;
+                String s = (String) JOptionPane.showInputDialog(
+                        null,
+                        "Introdueix el nom del programa que cerques:\n",
+                        "Cerca per Nom",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        possibilities,
+                        "Tots");
+
+                //If a string was returned:
+                if ((s != null) && (s.length() > 0)) {
+                    llistaFiltres = new String[1];
+                    llistaFiltres[0] = s;
+                  //  vGProgs.selectCercaNom();
+                    return;
+                }
+                //If you're here, the return value was null/empty.
+                    llistaFiltres = new String[0];
                 break;
-            default: break;
+            case 3: //Llista de Tematiques disponibles
+                llistaFiltres = CPG.getLTematiques();
+                break;
+            default:
+                break;
         }
-     
+
     }
-    public void initVistaGProgrames()
-    {
+
+    public void initVistaGProgrames() {
         /**Nova vista i nous escoltadors d'events*/
         vGProgs = new VistaGProgrames();
         ListSelectionListener selFiltre, selPrograma;
         ActionListener accions[] = new ActionListener[9];
-        
-        
+
+
         /**Setejem les dues llistes que tenim, la de programes i la de filtres
-         buidem tambe la fitxa*/
+        buidem tambe la fitxa*/
         actLlistaFiltres(0);
-        actLlistaProgrames("tots","");
+        actLlistaProgrames("tots", "");
         vGProgs.setLlistaProgrames(llistaProgrames);
         vGProgs.setLlistaFiltres(llistaFiltres);
         vGProgs.clearFitxa();
-        
+
         /**Init de nous listeners*/
         /** EventHandle.create(Qui fa sa crida, Classe a sa que es cerca sa funcio, nom de sa funcio)*/
         accions[0] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "setLlistaFiltre");
@@ -119,46 +129,48 @@ public class kVistaGProgrames
 
         selFiltre = (ListSelectionListener) java.beans.EventHandler.create(ListSelectionListener.class, this, "actualitzaLlProgrames");
         selPrograma = (ListSelectionListener) java.beans.EventHandler.create(ListSelectionListener.class, this, "seleccionatPrograma");
-        
+
         vGProgs.setListeners(accions, selFiltre, selPrograma);
     }
 
-    
     /** Funcions dels action listeners i list listeners*/
-public void setLlistaFiltre()
-    {
+    public void setLlistaFiltre() {
         vGProgs.clearFitxa();
         actLlistaFiltres(vGProgs.getFClickedInt());
         vGProgs.setLlistaFiltres(llistaFiltres);
     }
-    
-    public void actualitzaLlProgrames()
-    {
-        System.out.println("Actualitz programes!!!!");
-       //Boto pitjat
+
+    public void actualitzaLlProgrames() {
+        System.out.println("Actualitz ll progs!!");
+        //Boto pitjat
         String tipusFiltre = vGProgs.getFClickedStr();
 
-        //Agafa valor des filtre
-        String valorFiltre = vGProgs.getFiltreSelected();
 
-        if (valorFiltre.equals("-2") || valorFiltre.equals("-1")) {
-        tipusFiltre = "tots";
-	}
-	
-        llistaProgrames = CPG.getllistaFiltrada(tipusFiltre,valorFiltre);
+        //Agafa valor des filtre
+        String valorFiltre;
+
+        if (tipusFiltre.equalsIgnoreCase("tematica") == true || tipusFiltre.equalsIgnoreCase("nom") == true) {
+            valorFiltre = vGProgs.getFiltreSelected(true).toLowerCase();
+        } else {
+            valorFiltre = vGProgs.getFiltreSelected(false);
+        }
+
+
+        if (valorFiltre.equals("-2") || valorFiltre.equals("-1") || valorFiltre.equals("tots")) {
+            tipusFiltre = "tots";
+        }
+        llistaProgrames = CPG.getllistaFiltrada(tipusFiltre, valorFiltre);
 
         //Actualitza llista
-        if (llistaProgrames == null) 
-        {
+        if (llistaProgrames == null) {
             llistaProgrames = new String[1];
             llistaProgrames[0] = "";
         }
-        
+
         vGProgs.setLlistaProgrames(llistaProgrames);
     }
-    
-    public void seleccionatPrograma()
-    {
+
+    public void seleccionatPrograma() {
         //Agafem nom del programa seleccionat
         String nomP = vGProgs.getProgramaSelected();
 
@@ -166,28 +178,29 @@ public void setLlistaFiltre()
         //i actualizem la fitxa
         ////// FALTA INICIEMISSIO i DATA CADUCITATTTTTTTTT
         tuplaPrograma dadesP = CPG.veureFitxa(nomP);
-        if (dadesP != null)
-        {
-        String fitxa = "Nom: "+dadesP.nom+"\nPreu: "+dadesP.preu+"\nFormat: "
-                +dadesP.format+"\nCategoria: "+dadesP.categoria+"\nDuracio: "
-                +dadesP.duracio+"\nDescripcio: "+dadesP.descripcio;     
-    //Falta rellenar tematiques
-        if (dadesP.tematiques != null)
-        {
-            fitxa = fitxa+"\nTemes: ";
-            for (int i=0; i<dadesP.tematiques.length;i++)
-            {
-                if (i == 5) fitxa = fitxa + "\n";
-            fitxa = fitxa+dadesP.tematiques[i]+" ";
+        if (dadesP != null) {
+            String fitxa = "Nom: " + dadesP.nom + "\nPreu: " + dadesP.preu + "\nFormat: " + dadesP.format + "\nCategoria: " + dadesP.categoria + "\nDuracio: " + dadesP.duracio + "\nDescripcio: " + dadesP.descripcio + "\nData Caducitat: " + dadesP.dataCad.get(Calendar.DATE) + "/" + dadesP.dataCad.get(Calendar.MONTH) +
+                    "/" + dadesP.dataCad.get(Calendar.YEAR);
+            if (dadesP.format != 1) {
+                fitxa = fitxa + "\nData Inici Emissio:" + dadesP.iniciEmissio.get(Calendar.DATE) + "/" + dadesP.iniciEmissio.get(Calendar.MONTH) +
+                        "/" + dadesP.iniciEmissio.get(Calendar.YEAR);
             }
-        }
-        
-         vGProgs.setCuadreFitxa(fitxa);
+            //Falta rellenar tematiques
+            if (dadesP.tematiques != null) {
+                fitxa = fitxa + "\nTemes: ";
+                for (int i = 0; i < dadesP.tematiques.length; i++) {
+                    if (i == 5) {
+                        fitxa = fitxa + "\n";
+                    }
+                    fitxa = fitxa + dadesP.tematiques[i] + " ";
+                }
+            }
+
+            vGProgs.setCuadreFitxa(fitxa);
         }
     }
-    
-    public void afegirPrograma() throws ParseException
-    {
+
+    public void afegirPrograma() throws ParseException {
         Calendar dCad = Calendar.getInstance();
         Calendar dIniE = Calendar.getInstance();
         Date date;
@@ -202,21 +215,21 @@ public void setLlistaFiltre()
         nou.tematiques[0] = "PoRcs";
         nou.tematiques[1] = "Moixus";
         nou.tematiques[2] = "Animals grangers";
-        
+
         date = formatCalendar.parse("28-06-2008");
         dCad.setTime(date);
         dIniE.setTime(formatCalendar.parse("22-05-2008"));
         nou.dataCad = dCad;
         nou.iniciEmissio = dIniE;
-        
-        if (!CPG.afegirPrograma(nou))
-        System.out.println("El programa no te les dades correctes");
-        else
-        System.out.println("El programa ha estat afegit!");
+
+        if (!CPG.afegirPrograma(nou)) {
+            System.out.println("El programa no te les dades correctes");
+        } else {
+            System.out.println("El programa ha estat afegit!");
+        }
     }
-    
-    public void guardarTot() throws GestorDiscException
-    {
+
+    public void guardarTot() throws GestorDiscException {
         CPG.saveGclientsAll();
     }
 }
