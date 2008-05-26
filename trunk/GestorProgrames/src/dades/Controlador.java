@@ -92,7 +92,6 @@ public class Controlador <K,T extends ClasseAmbClau<K>>
          *      clau != null
          */
         // Per a cada objecte dins la llista
-       // if(estaObject(clau) && clau.equals(objecte.getClau()))
         if (estaObject(clau))
         {
             for(T i : llista)
@@ -272,4 +271,36 @@ public class Controlador <K,T extends ClasseAmbClau<K>>
         return false;
     }
 
+    
+    /**Afegida*/
+    public T obteElement(K clau)
+    {
+        /* Pre:
+         *      clau != null
+         */
+        // Per a cada objecte dins la llista
+        if (estaObject(clau))
+        {
+            for(T i : llista)
+            {
+                // L'aobjecte de la llista te com a clau "clau" ??
+               if(clau.equals(i.getClau()))
+               {
+                   /* L'objecte i te com a clau "clau";
+                    * per tant, fem que "objecte" tingui una copia de l'objecte i
+                * i retornem cert.
+                */
+                   return i;
+                }
+            }
+        }
+        /* No s'ha trobat cap objecte dins de la llista amb clau "clau";
+         * per tant, s'ha de retornar fals.
+         */
+        return null;
+        /* Post:
+         *      Retorna cert <=> Existeix un objecte a la llista amb clau "clau"
+         *              Si retorna cert => "objecte" conte una copia de l'objecta amb clau "clau"
+         */
+    }
 }

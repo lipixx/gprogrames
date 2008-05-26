@@ -196,7 +196,7 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
      *  @return La posició de la llista en que es troba, si no hi és -1.
      */
     public int[] existeixPrograma(K nomPrograma) {
-        int[] resultat = new int[3]; //0Format, 1categoria i 2index
+        int[] resultat; //0Format, 1categoria i 2index
         int listSize;
 
         for (int i = 0; i < 3; i++) {
@@ -205,11 +205,13 @@ public class RepositoriProgrames<K, T extends ClasseAmbClau<K>> {
                 for (int k = 0; k < listSize; k++) {
 
                     if (nomPrograma.equals(llistaProgrames[i][j].get(k).getClau())) {
-                        resultat[2] = k;
+                         resultat = new int[3];
+                         resultat[1] = j;
+                         resultat[0] = i;             
+                         resultat[2] = k;
+                        return resultat;
                     }
-                    resultat[1] = j;
-                    resultat[0] = i;
-                    return resultat;
+                    
                 }
             }
         }

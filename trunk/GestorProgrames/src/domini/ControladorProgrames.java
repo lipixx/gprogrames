@@ -161,8 +161,8 @@ public class ControladorProgrames {
     private void addTematicaProg(String temes[], Programa p) {
         int nTemes = temes.length;
         for (int i = 0; i < nTemes; i++) {
-            Tematica t = new Tematica("");
-            if (RepoTemes.obteElement(temes[i].toLowerCase(), t)) {
+            Tematica t = RepoTemes.obteElement(temes[i].toLowerCase());
+            if (t != null) {
                 p.addTematica(t);
             }
         }
@@ -443,6 +443,7 @@ public class ControladorProgrames {
      *          si el programa no existeix.
      */
     public tuplaPrograma veureFitxa(String nomPrograma) {
+        //if nomPrograma == ""; .. else
         tuplaPrograma fitxa = new tuplaPrograma();
         int midaTipus;
         Programa p = (Programa) RepoProg.getPrograma(nomPrograma);
@@ -512,7 +513,8 @@ public class ControladorProgrames {
         if (tipus.compareTo("domini.programa.Tertulia") == 0) {
             fitxa.categoria = 10;
         }
-
+        //Rellenar tematiques
+        fitxa.tematiques = p.getTemes();
         return fitxa;
     }
 
@@ -648,7 +650,8 @@ public class ControladorProgrames {
      *  @pre    -
      *  @post   S'ha afegit la tematica a la llista.
      */
-    private void addTematicaRepo(String[] tematiques) {
+    private void addTematicaRepo(String[] tematiques) 
+    {
         int nTemes = tematiques.length;
         for (int i = 0; i < nTemes; i++) {
             Tematica T = new Tematica(tematiques[i].toLowerCase());
