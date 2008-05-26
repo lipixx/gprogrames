@@ -319,11 +319,7 @@ public class ControladorProgrames {
                 if (tipusFiltre.equalsIgnoreCase("tematica")) {
                     resultatT = RepoProg.llistarProgrames();
 
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 11; j++) {
-                            nProgs = nProgs + resultatT[i][j].size();
-                        }
-                    }
+                    nProgs = RepoProg.getListSize();
 
                     arraySortida = new String[nProgs];
                     String[] arrayTemes;
@@ -334,12 +330,14 @@ public class ControladorProgrames {
                         for (int j = 0; j < 11; j++) {
                             /**Dins la llista F-C*/
                             
-                            for (int k = 0; k < resultatT[i][j].size(); k++) {
+                            for (int k = 0; k < resultatT[i][j].size(); k++)
+                            {
                                 p = (Programa) resultatT[i][j].get(k);
                                 arrayTemes = p.getTemes();
 
                                 for (int o = 0; o < arrayTemes.length; o++) {
-                                    if (arrayTemes[k].compareToIgnoreCase(valorFiltre) == 0) {
+                                    if (arrayTemes[o].compareToIgnoreCase(valorFiltre) == 0) 
+                                    {
                                         arraySortida[index] = p.getNom();
                                         index++;
                                         /*Per sortir del bucle*/

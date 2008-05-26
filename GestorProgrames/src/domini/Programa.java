@@ -202,7 +202,7 @@ public class Programa implements ClasseAmbClau<String>, Serializable {
     }
 
     public String getClau() {
-        return nom;
+        return nom.toLowerCase();
     }
 
     public void setCopia(ClasseAmbClau objecteACopiar) {
