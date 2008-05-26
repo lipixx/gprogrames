@@ -127,6 +127,7 @@ public class kVistaGProgrames
     /** Funcions dels action listeners i list listeners*/
 public void setLlistaFiltre()
     {
+        vGProgs.clearFitxa();
         actLlistaFiltres(vGProgs.getFClickedInt());
         vGProgs.setLlistaFiltres(llistaFiltres);
     }
@@ -147,6 +148,12 @@ public void setLlistaFiltre()
         llistaProgrames = CPG.getllistaFiltrada(tipusFiltre,valorFiltre);
 
         //Actualitza llista
+        if (llistaProgrames == null) 
+        {
+            llistaProgrames = new String[1];
+            llistaProgrames[0] = "";
+        }
+        
         vGProgs.setLlistaProgrames(llistaProgrames);
     }
     
@@ -154,15 +161,29 @@ public void setLlistaFiltre()
     {
         //Agafem nom del programa seleccionat
         String nomP = vGProgs.getProgramaSelected();
-        
+
         //Agafem fitxa del programa seleccionat
         //i actualizem la fitxa
         ////// FALTA INICIEMISSIO i DATA CADUCITATTTTTTTTT
         tuplaPrograma dadesP = CPG.veureFitxa(nomP);
+        if (dadesP != null)
+        {
         String fitxa = "Nom: "+dadesP.nom+"\nPreu: "+dadesP.preu+"\nFormat: "
-                +dadesP.format+"\nCategoria: "+dadesP.categoria+"\n Duracio: "
-                +dadesP.duracio+"\nDescripcio: "+dadesP.descripcio+"\n";     
-        vGProgs.setCuadreFitxa(fitxa);
+                +dadesP.format+"\nCategoria: "+dadesP.categoria+"\nDuracio: "
+                +dadesP.duracio+"\nDescripcio: "+dadesP.descripcio;     
+    //Falta rellenar tematiques
+        if (dadesP.tematiques != null)
+        {
+            fitxa = fitxa+"\nTemes: ";
+            for (int i=0; i<dadesP.tematiques.length;i++)
+            {
+                if (i == 5) fitxa = fitxa + "\n";
+            fitxa = fitxa+dadesP.tematiques[i]+" ";
+            }
+        }
+        
+         vGProgs.setCuadreFitxa(fitxa);
+        }
     }
     
     public void afegirPrograma() throws ParseException

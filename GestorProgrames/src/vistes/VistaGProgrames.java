@@ -38,25 +38,22 @@ public class VistaGProgrames extends javax.swing.JPanel {
     /**Modificadores dels atributs de les llistes i cuadres de text*/
     public void setLlistaProgrames(String[] strProgrames) {
         llistaProgrames.setListData(strProgrames);
-        llistaProgrames.setSelectedIndex(-1); //Aqui es com si hagis fet un click...
     }
 
     public void setLlistaFiltres(String[] llistaEFiltres) {
         /*Afegim "Tots"*/
-        llistaProgrames.setSelectedIndex(-1); //Aqui es com si hagis fet un click...
-        llistaFiltres.setSelectedIndex(0);
         String [] llistaAux = new String[llistaEFiltres.length+1];
         llistaAux[0] = "Tots";
         System.arraycopy(llistaEFiltres, 0, llistaAux, 1, llistaEFiltres.length);
         llistaFiltres.setListData(llistaAux);
     }
  
-    void setCuadreFitxa(String fitxa) 
+    public void setCuadreFitxa(String fitxa) 
     {
         fitxaPrograma.setText(fitxa);
     }
     
-    void clearFitxa() {
+    public void clearFitxa() {
         fitxaPrograma.setText("");
     }
 
