@@ -6,6 +6,8 @@
 
 package vistes;
 
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author  lipi
@@ -23,8 +25,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
         try {
             initComponents();
         } catch (Exception ex) {
-            System.out.println("Err al carregar db");
+            System.out.println("Err al carregar bbdd");
         }
+    }
+    
+    public void setActions(ActionListener actions[])
+    {
+        saveAll.addActionListener(actions[0]);
+        importaProgs.addActionListener(actions[1]);
+        esborraRepoProgs.addActionListener(actions[2]);
+        exportaProgs.addActionListener(actions[3]);
     }
         
     /** This method is called from within the constructor to
@@ -38,12 +48,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        saveAll = new javax.swing.JMenuItem();
+        clearAll = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        importaProgs = new javax.swing.JMenuItem();
+        exportaProgs = new javax.swing.JMenuItem();
+        esborraRepoProgs = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -55,22 +65,22 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Fitxer");
 
-        jMenuItem5.setText("Guardar tot");
-        jMenu1.add(jMenuItem5);
+        saveAll.setText("Guardar tot");
+        jMenu1.add(saveAll);
 
-        jMenuItem4.setText("Esborrar la BBDD");
-        jMenu1.add(jMenuItem4);
+        clearAll.setText("Esborrar la BBDD");
+        jMenu1.add(clearAll);
 
         jMenu3.setText("Programes");
 
-        jMenuItem1.setText("Importar Programes");
-        jMenu3.add(jMenuItem1);
+        importaProgs.setText("Importar Programes");
+        jMenu3.add(importaProgs);
 
-        jMenuItem2.setText("Exportar Programes");
-        jMenu3.add(jMenuItem2);
+        exportaProgs.setText("Exportar Programes");
+        jMenu3.add(exportaProgs);
 
-        jMenuItem3.setText("Esborrar Repositori Programes");
-        jMenu3.add(jMenuItem3);
+        esborraRepoProgs.setText("Esborrar Repositori Programes");
+        jMenu3.add(esborraRepoProgs);
 
         jMenu1.add(jMenu3);
 
@@ -121,21 +131,21 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem clearAll;
+    private javax.swing.JMenuItem esborraRepoProgs;
+    private javax.swing.JMenuItem exportaProgs;
+    private javax.swing.JMenuItem importaProgs;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JMenuItem saveAll;
     // End of variables declaration//GEN-END:variables
     
 }

@@ -213,6 +213,154 @@ public class vAfegirPrograma extends javax.swing.JDialog {
         }
     }
 
+    public void setDadesMod(tuplaPrograma dadesP) 
+    {
+        if (dadesP != null){
+        nom.setText(dadesP.nom);
+        nom.setEditable(false);
+        llistaCategories.setEnabled(false);
+        llistaFormats.setEnabled(false);
+        
+        descripcio.setText(dadesP.descripcio);
+        preu.setValue(dadesP.preu);  
+        
+        int dia = dadesP.dataCad.get(Calendar.DAY_OF_MONTH);
+        int mes = dadesP.dataCad.get(Calendar.MONTH);
+        int any = dadesP.dataCad.get(Calendar.YEAR);
+        dataC.setText(dia+"/"+mes+"/"+any);
+        
+        if (dadesP.format == 2 || dadesP.format == 0)
+                    duracio.setValue(dadesP.duracio);
+        
+        if (dadesP.format == 2)
+        {
+        dia = dadesP.iniciEmissio.get(Calendar.DAY_OF_MONTH);
+        mes = dadesP.iniciEmissio.get(Calendar.MONTH);
+        any = dadesP.iniciEmissio.get(Calendar.YEAR);
+        int horax = dadesP.iniciEmissio.get(Calendar.HOUR_OF_DAY);
+        int minuts = dadesP.iniciEmissio.get(Calendar.MINUTE);
+        
+        dIniEmissio.setText(dia+"/"+mes+"/"+any);
+        hora.setText(horax+":"+minuts);
+        }
+        
+        llistaFormats.setSelectedIndex(dadesP.format);
+        
+        switch (dadesP.format)
+        {
+                //Normal
+            case 0:
+                switch (dadesP.categoria) {
+                    case 0:
+                        //Altres
+                        llistaCategories.setSelectedIndex(0);
+                        break;
+                    case 1:
+                        //Adults
+                        llistaCategories.setSelectedIndex(1);
+                        break;
+                    case 2:
+                        //Concurs
+                        llistaCategories.setSelectedIndex(2);
+                        break;
+                    case 3:
+                        //Documental
+                        llistaCategories.setSelectedIndex(3);
+                        break;
+                    case 4:
+                        //Esport
+                        llistaCategories.setSelectedIndex(4);
+                        break;
+                    case 5:
+                        //Infantil
+                        llistaCategories.setSelectedIndex(5);
+                        break;
+                    case 6:
+                        //Musica
+                        llistaCategories.setSelectedIndex(6);
+                        break;
+                    case 8:
+                        //Pelicula
+                        llistaCategories.setSelectedIndex(7);
+                        break;
+                    case 9:
+                        //Serie
+                        llistaCategories.setSelectedIndex(8);
+                        break;
+                    case 10:
+                        //Tertulia
+                        llistaCategories.setSelectedIndex(9);
+                        break;
+                }
+                break;
+                //Continu
+            case 1:
+                switch (dadesP.categoria) {
+                    case 0:
+                        //Altres
+                        llistaCategories.setSelectedIndex(0);
+                        break;
+                    case 2:
+                        //Concurs
+                        llistaCategories.setSelectedIndex(1);
+                        break;
+                    case 4:
+                        //Esports
+                        llistaCategories.setSelectedIndex(2);
+                        break;
+
+                    case 6:
+                        //Musica
+                        llistaCategories.setSelectedIndex(3);
+                        break;
+                    case 7:
+                        //Noticies
+                        llistaCategories.setSelectedIndex(4);
+                        break;
+                    default:
+                        break;
+                    }
+                break;
+                
+                //Directe
+            case 2:
+                switch (dadesP.categoria)
+                {
+                    case 0:
+                        //Altres
+                        llistaCategories.setSelectedIndex(0);
+                        break;
+                    case 2:
+                        //Concurs
+                        llistaCategories.setSelectedIndex(1);
+                        break;
+                    case 4:
+                        //Esport
+                        llistaCategories.setSelectedIndex(2);
+                        break;
+                    case 7:
+                        //Noticies
+                        llistaCategories.setSelectedIndex(3);
+                        break;
+                    case 10:
+                        //Tertulia
+                        llistaCategories.setSelectedIndex(4);
+                    break;
+                    default: break;
+                }
+                break;        
+            default: break;
+        }
+        
+        String tematiquesOld = new String();
+        for (int i=0; i<dadesP.tematiques.length; i++)
+            tematiquesOld = tematiquesOld + dadesP.tematiques[i] +" ";
+        
+        tematiques.setText(tematiquesOld);
+        
+    }
+    }
+
     private void clearComponents() {
         nom.setText("");
         descripcio.setText("");

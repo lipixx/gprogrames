@@ -16,7 +16,7 @@ public class kVistaGProgrames {
 
     private ControladorProgrames CPG;
     private VistaGProgrames vGProgs;
-    vAfegirPrograma vADDP;
+    vAfegirPrograma vADDP,vMODP;
     private tuplaPrograma dadesPrograma;
     private String[] llistaProgrames;
     private String[] llistaFiltres;
@@ -33,10 +33,11 @@ public class kVistaGProgrames {
         formatCalendar = new SimpleDateFormat("dd-MM-yyyy");
 
         vADDP = new vAfegirPrograma(new javax.swing.JFrame(), true);
-
+        vMODP = new vAfegirPrograma(new javax.swing.JFrame(),true);
         /*Init de vista*/
         initVistaGProgrames();
         initVistaADDP();
+        initVistaMODP();
     }
 
     public VistaGProgrames getVista() {
@@ -230,6 +231,15 @@ public class kVistaGProgrames {
             }
         });
     }
+    
+        private void initVistaMODP() {
+        vMODP.setActions(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent arg0) {
+                modProgramaDeForm();
+            }
+        });
+    }
 
     /** Funcions dels action listeners i list listeners*/
     private void eliminarPrograma()
@@ -245,8 +255,17 @@ public class kVistaGProgrames {
     
     private void modificarPrograma()
     {
-        System.out.println("modificar-programa");
+        String nomP = vGProgs.getProgramaSelected();
+        tuplaPrograma dadesP = CPG.veureFitxa(nomP.toLowerCase());
+
+        
+        if (dadesP != null)
+        {
+            vMODP.setDadesMod(dadesP);
+            vMODP.setVisible(true);
+        }
     }
+    
     private void sortir()
     {
         System.out.println("sortir-programa");
@@ -264,6 +283,25 @@ public class kVistaGProgrames {
         vADDP.setVisible(false);
     }
 
+    public void modProgramaDeForm() 
+    {
+         tuplaPrograma mod = vMODP.getTupla();
+         
+         vMODP.setVisible(false);
+         
+         if (mod == null || !CPG.modificarPrograma(mod)) 
+         {
+          JOptionPane.showMessageDialog(null, "El programa no s'ha modificat.");
+         }
+         else
+        {
+            System.out.println("El programa ha estat modificat!");
+        }
+         
+        actualitzaLlProgrames();
+        vGProgs.clearFitxa();
+    }
+    
     public void setLlistaFiltre() {
         vGProgs.clearFitxa();
         actLlistaFiltres(vGProgs.getFClickedInt());
@@ -309,12 +347,16 @@ public class kVistaGProgrames {
         ////// FALTA INICIEMISSIO i DATA CADUCITATTTTTTTTT
         tuplaPrograma dadesP = CPG.veureFitxa(nomP.toLowerCase());
         if (dadesP != null) {
-            String fitxa = "Nom: " + dadesP.nom + "\nPreu: " + dadesP.preu + "\nFormat: " + dadesP.format + "\nCategoria: " + dadesP.categoria + "\nDuracio: " + dadesP.duracio + "\nDescripcio: " + dadesP.descripcio + "\nData Caducitat: " + dadesP.dataCad.get(Calendar.DATE) + "/" + dadesP.dataCad.get(Calendar.MONTH) +
+            String fitxa = "Nom: " + dadesP.nom + "\nPreu: " + dadesP.preu + "\nFormat: " + dadesP.format + "\nCategoria: " + dadesP.categoria +"\nDescripcio: " + dadesP.descripcio + "\nData Caducitat: " + dadesP.dataCad.get(Calendar.DATE) + "/" + dadesP.dataCad.get(Calendar.MONTH) +
                     "/" + dadesP.dataCad.get(Calendar.YEAR);
-            if (dadesP.format != 1) {
+
+            if (dadesP.format == 2 || dadesP.format == 0)  fitxa +="\nDuracio: " + dadesP.duracio; 
+            
+            if (dadesP.format == 2) {
                 fitxa = fitxa + "\nData Inici Emissio:" + dadesP.iniciEmissio.get(Calendar.DATE) + "/" + dadesP.iniciEmissio.get(Calendar.MONTH) +
                         "/" + dadesP.iniciEmissio.get(Calendar.YEAR) + " a les " + dadesP.iniciEmissio.get(Calendar.HOUR_OF_DAY) + ":" + dadesP.iniciEmissio.get(Calendar.MINUTE);
             }
+            
 
             if (dadesP.tematiques != null) {
                 fitxa = fitxa + "\nTemes: ";
