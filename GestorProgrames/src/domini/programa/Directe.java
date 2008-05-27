@@ -26,8 +26,9 @@ public class Directe extends Programa {
             iniciEmissio = (Calendar) dataCaducitat.clone();
         }
         else
+                            
         iniciEmissio = (Calendar) NiniciEmissio.clone();
-        
+                        
         if (Nduracio < 0) 
         {
             duracio = 0;

@@ -3,18 +3,20 @@ package vistes;
 import dades.GestorDiscException;
 import domini.ControladorProgrames;
 import domini.tuplaPrograma;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class kVistaGProgrames {
 
     private ControladorProgrames CPG;
     private VistaGProgrames vGProgs;
+    AfegirPrograma vADDP;
     private tuplaPrograma dadesPrograma;
     private String[] llistaProgrames;
     private String[] llistaFiltres;
@@ -30,8 +32,11 @@ public class kVistaGProgrames {
         dadesPrograma = null;
         formatCalendar = new SimpleDateFormat("dd-MM-yyyy");
 
+        vADDP = new AfegirPrograma(new javax.swing.JFrame(), true);
+
         /*Init de vista*/
         initVistaGProgrames();
+        initVistaADDP();
     }
 
     public VistaGProgrames getVista() {
@@ -85,11 +90,11 @@ public class kVistaGProgrames {
                 if ((s != null) && (s.length() > 0)) {
                     llistaFiltres = new String[1];
                     llistaFiltres[0] = s;
-                  //  vGProgs.selectCercaNom();
+                    //  vGProgs.selectCercaNom();
                     return;
                 }
                 //If you're here, the return value was null/empty.
-                    llistaFiltres = new String[0];
+                llistaFiltres = new String[0];
                 break;
             case 3: //Llista de Tematiques disponibles
                 llistaFiltres = CPG.getLTematiques();
@@ -117,6 +122,90 @@ public class kVistaGProgrames {
 
         /**Init de nous listeners*/
         /** EventHandle.create(Qui fa sa crida, Classe a sa que es cerca sa funcio, nom de sa funcio)*/
+        accions[0] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                setLlistaFiltre();
+            }
+        });
+
+        accions[1] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                setLlistaFiltre();
+            }
+        });
+
+        accions[2] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                setLlistaFiltre();
+            }
+        });
+
+        accions[3] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                setLlistaFiltre();
+            }
+        });
+
+        accions[4] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0){
+                try {
+                    afegirPrograma();
+                    actualitzaLlProgrames();
+                    setLlistaFiltre();
+                } catch (ParseException ex) {
+                    System.out.println("Error in afegirPrograma: "+ex.getMessage());
+                }
+            }
+        });
+
+        accions[5] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                modificarPrograma();
+            }
+        });
+        accions[6] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                eliminarPrograma();
+            }
+        });
+        accions[7] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    guardarTot();
+                } catch (GestorDiscException ex) {
+                    System.out.println("Error in afegirPrograma: "+ex.getMessage());
+                }
+            }
+        });
+        accions[8] = (new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                sortir();
+            }
+        });
+
+        selFiltre = (new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent arg0) {
+                actualitzaLlProgrames();
+            }
+        });
+
+        selPrograma = (new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent arg0) {
+                seleccionatPrograma();
+            }
+        });
+        /**
         accions[0] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "setLlistaFiltre");
         accions[1] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "setLlistaFiltre");
         accions[2] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "setLlistaFiltre");
@@ -126,14 +215,55 @@ public class kVistaGProgrames {
         accions[6] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "modificarPrograma");
         accions[7] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "guardarTot");
         accions[8] = (ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "sortir");
-
         selFiltre = (ListSelectionListener) java.beans.EventHandler.create(ListSelectionListener.class, this, "actualitzaLlProgrames");
         selPrograma = (ListSelectionListener) java.beans.EventHandler.create(ListSelectionListener.class, this, "seleccionatPrograma");
-
+         */
         vGProgs.setListeners(accions, selFiltre, selPrograma);
     }
 
+    private void initVistaADDP() {
+        //  vADDP.setActions((ActionListener) java.beans.EventHandler.create(ActionListener.class, this, "addProgramaDeForm"));
+        vADDP.setActions(new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                addProgramaDeForm();
+            }
+        });
+    }
+
     /** Funcions dels action listeners i list listeners*/
+    private void eliminarPrograma()
+    {
+        String nomP = vGProgs.getProgramaSelected();
+        if (nomP != null || !nomP.equals(""))
+           if ( !CPG.eliminaPrograma(nomP.toLowerCase()) )
+              System.out.println("Error in eliminarPrograma - kVistaGProgrames L:237");
+           else 
+                actualitzaLlProgrames();
+                vGProgs.clearFitxa();
+    }
+    
+    private void modificarPrograma()
+    {
+        System.out.println("modificar-programa");
+    }
+    private void sortir()
+    {
+        System.out.println("sortir-programa");
+    }
+
+    
+    public void addProgramaDeForm() {
+        tuplaPrograma nou = vADDP.getTupla();
+                        
+        if (nou == null || !CPG.afegirPrograma(nou)) {
+            System.out.println("El programa no te les dades correctes o ja existia");
+        } else {
+            System.out.println("El programa ha estat afegit!");
+        }
+        vADDP.setVisible(false);
+    }
+
     public void setLlistaFiltre() {
         vGProgs.clearFitxa();
         actLlistaFiltres(vGProgs.getFClickedInt());
@@ -141,7 +271,7 @@ public class kVistaGProgrames {
     }
 
     public void actualitzaLlProgrames() {
-        System.out.println("Actualitz ll progs!!");
+        //System.out.println("Actualitz ll progs!!");
         //Boto pitjat
         String tipusFiltre = vGProgs.getFClickedStr();
 
@@ -177,15 +307,15 @@ public class kVistaGProgrames {
         //Agafem fitxa del programa seleccionat
         //i actualizem la fitxa
         ////// FALTA INICIEMISSIO i DATA CADUCITATTTTTTTTT
-        tuplaPrograma dadesP = CPG.veureFitxa(nomP);
+        tuplaPrograma dadesP = CPG.veureFitxa(nomP.toLowerCase());
         if (dadesP != null) {
             String fitxa = "Nom: " + dadesP.nom + "\nPreu: " + dadesP.preu + "\nFormat: " + dadesP.format + "\nCategoria: " + dadesP.categoria + "\nDuracio: " + dadesP.duracio + "\nDescripcio: " + dadesP.descripcio + "\nData Caducitat: " + dadesP.dataCad.get(Calendar.DATE) + "/" + dadesP.dataCad.get(Calendar.MONTH) +
                     "/" + dadesP.dataCad.get(Calendar.YEAR);
             if (dadesP.format != 1) {
                 fitxa = fitxa + "\nData Inici Emissio:" + dadesP.iniciEmissio.get(Calendar.DATE) + "/" + dadesP.iniciEmissio.get(Calendar.MONTH) +
-                        "/" + dadesP.iniciEmissio.get(Calendar.YEAR);
+                        "/" + dadesP.iniciEmissio.get(Calendar.YEAR) + " a les " + dadesP.iniciEmissio.get(Calendar.HOUR_OF_DAY) + ":" + dadesP.iniciEmissio.get(Calendar.MINUTE);
             }
-            //Falta rellenar tematiques
+
             if (dadesP.tematiques != null) {
                 fitxa = fitxa + "\nTemes: ";
                 for (int i = 0; i < dadesP.tematiques.length; i++) {
@@ -201,35 +331,15 @@ public class kVistaGProgrames {
     }
 
     public void afegirPrograma() throws ParseException {
-        Calendar dCad = Calendar.getInstance();
-        Calendar dIniE = Calendar.getInstance();
-        Date date;
-        tuplaPrograma nou = new tuplaPrograma();
-        nou.nom = "Primer";
-        nou.descripcio = "Programa de porcs i moixus";
-        nou.preu = (float) 10.50;
-        nou.categoria = 10;
-        nou.duracio = 30;
-        nou.format = 2;
-        nou.tematiques = new String[3];
-        nou.tematiques[0] = "PoRcs";
-        nou.tematiques[1] = "Moixus";
-        nou.tematiques[2] = "Animals grangers";
-
-        date = formatCalendar.parse("28-06-2008");
-        dCad.setTime(date);
-        dIniE.setTime(formatCalendar.parse("22-05-2008"));
-        nou.dataCad = dCad;
-        nou.iniciEmissio = dIniE;
-
-        if (!CPG.afegirPrograma(nou)) {
-            System.out.println("El programa no te les dades correctes");
-        } else {
-            System.out.println("El programa ha estat afegit!");
-        }
+        // vADDP = new AfegirPrograma(new javax.swing.JFrame(), true);
+       // initVistaADDP();
+        vADDP.setLocationRelativeTo(vGProgs);
+        vADDP.setTitle("Afegir nou Programa");
+        vADDP.setVisible(true);
     }
 
     public void guardarTot() throws GestorDiscException {
+        System.out.println("All saved!!!");
         CPG.saveGclientsAll();
     }
 }

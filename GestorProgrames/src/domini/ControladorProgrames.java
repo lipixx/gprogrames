@@ -62,7 +62,7 @@ public class ControladorProgrames {
                     case 4: //Esport
                         //Uncomment per opcional
                         //p = new EsportN(nou.nom, nou.dataCad, nou.descripcio, nou.preu, nou.duracio, nou.attrc1);
-                        p = new DocumentalN(nou.nom, nou.dataCad, nou.descripcio, nou.preu, nou.duracio);
+                        p = new EsportN(nou.nom, nou.dataCad, nou.descripcio, nou.preu, nou.duracio);
                         break;
                     case 5: //Infantil
                         p = new InfantilN(nou.nom, nou.dataCad, nou.descripcio, nou.preu, nou.duracio);
@@ -73,7 +73,7 @@ public class ControladorProgrames {
                     case 8: //Pelicula Director - Any - String True VO.
                         //Uncomment per opcional
                         //p = new PeliculaN(nou.nom, nou.dataCad, nou.descripcio, nou.preu, nou.duracio, nou.attrc1, nou.attrc2, Boolean.valueOf(nou.attrc3));
-                        p = new MusicaN(nou.nom, nou.dataCad, nou.descripcio, nou.preu, nou.duracio);
+                        p = new PeliculaN(nou.nom, nou.dataCad, nou.descripcio, nou.preu, nou.duracio);
                         break;
                     case 9: //Serie
                         //Uncomment per opcional 
