@@ -201,6 +201,11 @@ public class Programa implements ClasseAmbClau<String>, Serializable {
         return null;
     }
 
+    public void clearTemes()
+    {
+        llistaTematica.clear();
+    }
+    
     public String getClau() {
         return nom.toLowerCase();
     }

@@ -9,12 +9,12 @@
             <Property name="text" type="java.lang.String" value="Fitxer"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+            <MenuItem class="javax.swing.JMenuItem" name="saveAll">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar tot"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="clearAll">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Esborrar la BBDD"/>
               </Properties>
@@ -24,17 +24,17 @@
                 <Property name="text" type="java.lang.String" value="Programes"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+                <MenuItem class="javax.swing.JMenuItem" name="importaProgs">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Importar Programes"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+                <MenuItem class="javax.swing.JMenuItem" name="exportaProgs">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Exportar Programes"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+                <MenuItem class="javax.swing.JMenuItem" name="esborraRepoProgs">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Esborrar Repositori Programes"/>
                   </Properties>

@@ -189,12 +189,15 @@ public class ControladorProgrames {
      */
     public boolean modificarPrograma(tuplaPrograma nou) {
         /*Es modifica per punter*/
-        Programa p = (Programa) RepoProg.getPrograma(nou.nom);
+        Programa p = (Programa) RepoProg.getPrograma(nou.nom.toLowerCase());
         if (p != null) {
             p.setDataCaducitat(nou.dataCad);
             p.setDescripcio(nou.descripcio);
             p.setNom(nou.nom);
             p.setPreubase(nou.preu);
+            p.clearTemes();
+            addTematicaProg(nou.tematiques,p);
+            
             String tipus = p.getClass().getName();
             char tipusc = tipus.charAt(tipus.length() - 1);
 
@@ -429,7 +432,7 @@ public class ControladorProgrames {
      *  @return Una llista amb els formats disponibles.
      */
     public String[] getLFormat() {
-        String[] arrayFormats = {"Normal", "Directe", "Continu"};
+        String[] arrayFormats = {"Normal", "Continu", "Directe"};
         return arrayFormats;
     }
 
@@ -476,14 +479,14 @@ public class ControladorProgrames {
 
 
         if (tipus.charAt(midaTipus - 1) == 'N') {
-            fitxa.format = 1;
+            fitxa.format = 0;
             fitxa.duracio = ((Normal) p).getDuracio();
         }
         if (tipus.charAt(midaTipus - 1) == 'C') {
-            fitxa.format = 2;
+            fitxa.format = 1;
         }
         if (tipus.charAt(midaTipus - 1) == 'D') {
-            fitxa.format = 3;
+            fitxa.format = 2;
             fitxa.duracio = ((Directe) p).getDuracio();
             fitxa.iniciEmissio = ((Directe) p).getIniciEmissio();
         }
