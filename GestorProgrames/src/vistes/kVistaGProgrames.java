@@ -16,7 +16,7 @@ public class kVistaGProgrames {
 
     private ControladorProgrames CPG;
     private VistaGProgrames vGProgs;
-    AfegirPrograma vADDP;
+    vAfegirPrograma vADDP;
     private tuplaPrograma dadesPrograma;
     private String[] llistaProgrames;
     private String[] llistaFiltres;
@@ -32,7 +32,7 @@ public class kVistaGProgrames {
         dadesPrograma = null;
         formatCalendar = new SimpleDateFormat("dd-MM-yyyy");
 
-        vADDP = new AfegirPrograma(new javax.swing.JFrame(), true);
+        vADDP = new vAfegirPrograma(new javax.swing.JFrame(), true);
 
         /*Init de vista*/
         initVistaGProgrames();
@@ -257,7 +257,7 @@ public class kVistaGProgrames {
         tuplaPrograma nou = vADDP.getTupla();
                         
         if (nou == null || !CPG.afegirPrograma(nou)) {
-            System.out.println("El programa no te les dades correctes o ja existia");
+          JOptionPane.showMessageDialog(null, "El programa existeix.");
         } else {
             System.out.println("El programa ha estat afegit!");
         }

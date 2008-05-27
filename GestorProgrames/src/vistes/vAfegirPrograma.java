@@ -22,12 +22,12 @@ import javax.swing.text.NumberFormatter;
  *
  * @author  lipi
  */
-public class AfegirPrograma extends javax.swing.JDialog {
+public class vAfegirPrograma extends javax.swing.JDialog {
 
     tuplaPrograma nouPrograma;
 
     /** Creates new form AfegirPrograma */
-    public AfegirPrograma(java.awt.Frame parent, boolean modal) {
+    public vAfegirPrograma(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -196,12 +196,13 @@ public class AfegirPrograma extends javax.swing.JDialog {
 
             /*Tematiques*/
             StringTokenizer temaSueltu = new StringTokenizer(tematiques.getText());
-            nouPrograma.tematiques = new String[temaSueltu.countTokens()];
+            nouPrograma.tematiques = new String[temaSueltu.countTokens()+1];
             int i = 0;
-            while (temaSueltu.hasMoreTokens() && i < nouPrograma.tematiques.length) {
+            while (temaSueltu.hasMoreTokens() && i < nouPrograma.tematiques.length-1) {
                 nouPrograma.tematiques[i] = temaSueltu.nextToken();
                 i++;
             }
+            nouPrograma.tematiques[nouPrograma.tematiques.length-1] = "General";
             clearComponents();
             return nouPrograma;
 
