@@ -6,6 +6,8 @@
 package vistes;
 
 import domini.ControladorProgrames;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
  *
@@ -39,6 +41,9 @@ public class kVistes
     
     public void mostraVPrincipal()
     {
+        //Dimension tamPantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        vPrincipal.setTitle("PropTV 1.0b");
+        vPrincipal.setLocation(150,40);
         vPrincipal.setVisible(true);
     }
 }

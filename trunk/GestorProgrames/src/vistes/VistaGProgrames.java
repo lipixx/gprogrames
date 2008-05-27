@@ -36,7 +36,8 @@ public class VistaGProgrames extends javax.swing.JPanel {
     
     
     /**Modificadores dels atributs de les llistes i cuadres de text*/
-    public void setLlistaProgrames(String[] strProgrames) {
+    public void setLlistaProgrames(String[] strProgrames)
+    {
         llistaProgrames.setListData(strProgrames);
     }
 
@@ -80,7 +81,6 @@ public class VistaGProgrames extends javax.swing.JPanel {
     public String getProgramaSelected() 
     {
         String programaSelected = (String) llistaProgrames.getSelectedValue();
-        
         if (programaSelected == null) return "";
        return programaSelected;  
     }
@@ -111,7 +111,7 @@ public class VistaGProgrames extends javax.swing.JPanel {
 
     void setListeners(ActionListener[] accions, ListSelectionListener selFiltres, ListSelectionListener selProgs) 
     {
-        /**Associem cada ActionListener als botons, i el listener de seleccio a les llistes*/
+        /**Associem cada ActionListener als botons, i el listener de seleccio a les llistes*/     
         buttonFiltreFormat.addActionListener(accions[0]);
         buttonFiltreCategoria.addActionListener(accions[1]);
         buttonFiltreNom.addActionListener(accions[2]);

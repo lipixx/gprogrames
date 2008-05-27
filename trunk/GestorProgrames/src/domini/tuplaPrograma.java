@@ -63,7 +63,7 @@ public class tuplaPrograma
     
     public tuplaPrograma(){
         nom = "";
-        preu = -1;
+        preu = 0;
         dataCad = null;
         descripcio = "";
         format = -1;
