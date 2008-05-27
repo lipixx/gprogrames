@@ -39,7 +39,7 @@ public class ControladorProgrames {
      *  @return Cert si el programa s'ha introduït correctament. Fals altrament.
      */
     public boolean afegirPrograma(tuplaPrograma nou) {
-        if (RepoProg.existeixPrograma(nou.nom) != null) {
+        if (RepoProg.existeixPrograma(nou.nom.toLowerCase()) != null) {
             return false;
         }
         Programa p;
@@ -319,28 +319,44 @@ public class ControladorProgrames {
                 if (tipusFiltre.equalsIgnoreCase("tematica")) {
                     resultatT = RepoProg.llistarProgrames();
 
+                    /**L'array de sortida maxim tindra nProgs*/
                     nProgs = RepoProg.getListSize();
-
                     arraySortida = new String[nProgs];
                     String[] arrayTemes;
 
                     /**Dins el Format*/
                     for (int i = 0; i < 3; i++) {
                         /**Dins la categoria*/
+
                         for (int j = 0; j < 11; j++) {
-                            /**Dins la llista F-C*/
-                            
+                            /**Dins la llista F-C
+                            /**Per totes les llistes de format i i categoria j fer,
+                                per cada programa que hi ha, fins a veure'ls tots (resultatT[i][j].size()):
+                             */
                             for (int k = 0; k < resultatT[i][j].size(); k++)
                             {
+                                /**Obte el programa K de la llista format i, cat j.*/
                                 p = (Programa) resultatT[i][j].get(k);
+                                
+                                /**N'extreu els temes*/
                                 arrayTemes = p.getTemes();
-
-                                for (int o = 0; o < arrayTemes.length; o++) {
+                                
+                                /**Per tots els temes d'aquest programa, mirar si n'hi ha cap
+                                 * que sigui igual al que ens demanen.
+                                 */
+                                for (int o = 0; o < arrayTemes.length; o++) 
+                                {
                                     if (arrayTemes[o].compareToIgnoreCase(valorFiltre) == 0) 
                                     {
+                                        /**Si hi es l'afegim a l'array de sortida
+                                         * i incrementem l'index, que correspon al num
+                                         * de programes trobats fins al moment.
+                                         */
                                         arraySortida[index] = p.getNom();
                                         index++;
-                                        /*Per sortir del bucle*/
+                                        
+                                        /*Si l'hem trobat, no fa falta cercar mes, llavors
+                                         per sortir del bucle fem*/
                                         o = arrayTemes.length;
                                     }
                                 }

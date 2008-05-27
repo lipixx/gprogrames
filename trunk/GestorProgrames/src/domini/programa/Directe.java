@@ -26,7 +26,10 @@ public class Directe extends Programa {
             iniciEmissio = (Calendar) dataCaducitat.clone();
         }
         else
-                            
+        
+        //Crida que no entenc.. pero s'ha de fer
+        NiniciEmissio.get(Calendar.HOUR_OF_DAY);
+        NiniciEmissio.get(Calendar.MINUTE);                     
         iniciEmissio = (Calendar) NiniciEmissio.clone();
                         
         if (Nduracio < 0) 
